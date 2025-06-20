@@ -1,0 +1,25 @@
+{
+    "initial_bot_message": "Xin chào tôi là trợ lý chiêm tinh. Bạn cần trợ giúp gì?",
+    "functions": ["predict the day base on the zodiac", "tell me about my zodiac sign", "give me a daily horoscope"],
+
+    "bot_name": "ZodiacBot",
+    "zodiac_signs": {
+        "Aries": "March 21 - April 19",
+        "Taurus": "April 20 - May 20",
+        "Gemini": "May 21 - June 20",
+        "Cancer": "June 21 - July 22",
+        "Leo": "July 23 - August 22",
+        "Virgo": "August 23 - September 22",
+        "Libra": "September 23 - October 22",
+        "Scorpio": "October 23 - November 21",
+        "Sagittarius": "November 22 - December 21",
+        "Capricorn": "December 22 - January 19",
+        "Aquarius": "January 20 - February 18",
+        "Pisces": "February 19 - March 20"
+    },
+    "bot_avt":"./assets/OIP.jpg",
+    "bot_initial_message":"Hi, I am AstroBot, you personal astrologer. I can help you with your horoscope and astrology-related questions. Please ask me anything!",
+    
+    "user_avt":"./assets/chill.jpg"
+
+}
