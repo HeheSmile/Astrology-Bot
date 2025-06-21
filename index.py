@@ -7,32 +7,30 @@ import google.generativeai as genai
 import streamlit as st 
 
 # Cleaning dataframe
+@st.cache_data
+def clean_dataframe(df):
+    # Convert 'date' column to datetime and extract day of week, month, and year
+    df['date'] = pd.to_datetime(df['date'], format='%Y%m%d')
+
+    # Extracting day of week, month, and year from the date
+    df['day_of_week'] = df['date'].dt.dayofweek
+    df['month'] = df['date'].dt.month
+    df['year'] = df['date'].dt.year
+
+    # Delete the original 'date' column
+    df.drop(columns=['date'], inplace=True)
+    
+    return df
 df = pd.read_csv('./data/horoscope_saved.csv', index_col=0)
-
-# Convert 'date' column to datetime and extract day of week, month, and year
-df['date'] = pd.to_datetime(df['date'], format='%Y%m%d')
-
-# Extracting day of week, month, and year from the date
-df['day_of_week'] = df['date'].dt.dayofweek
-df['month'] = df['date'].dt.month
-df['year'] = df['date'].dt.year
-
-# Delete the original 'date' column
-df.drop(columns=['date'], inplace=True)
-print(df.head())
-print(df.nunique())
-print(df.isna().sum())
 
 #setup api 
 load_dotenv() 
-google_api_key = os.getenv("GOOGLE_API_KEY") # Gemini API Key
-genai.configure(api_key=google_api_key)
-
-
+api = st.secrets['api']['api-key'] # Gemini API Key
+genai.configure(api_key=api)
 
 #load config 
 
-with open('config.json','r') as f :
+with open('config.json','r', encoding = 'utf-8') as f :
     config = json.load(f)
     functions = config.get('functions')
     initial_bot_message = config.get('bot_initial_message')
@@ -41,7 +39,6 @@ with open('config.json','r') as f :
     bot_avt = config.get('bot_avt')
 
     user_avt = config.get('user_avt')
-
 
 #load dataframe zodiac
 zodiac_df = df
