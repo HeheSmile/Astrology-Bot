@@ -3,5 +3,25 @@
         "role": "assistant",
         "content": "Xin chào tôi là trợ lý chiêm tinh. Bạn cần trợ giúp gì?",
         "avt": "./assets/bot_avt.jpg"
+    },
+    {
+        "role": "user",
+        "content": "hi",
+        "avt": "./assets/user_avt.jpg"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi!\n",
+        "avt": "./assets/bot_avt.jpg"
+    },
+    {
+        "role": "user",
+        "content": "hom nay co mua ko",
+        "avt": "./assets/user_avt.jpg"
+    },
+    {
+        "role": "assistant",
+        "content": "Có nhiều cách trả lời tùy thuộc vào khả năng tiếp cận thông tin thời tiết của bot:\n\n**Nếu bot có khả năng truy cập thông tin thời tiết:**\n\n* \"Hôm nay thời tiết như thế nào thì mình không chắc lắm, nhưng mình có thể kiểm tra dự báo thời tiết cho bạn. Bạn ở khu vực nào?\"  (Sau khi người dùng trả lời khu vực, bot sẽ trả lời dựa trên dữ liệu thời tiết).\n* \"Mình đang kiểm tra dự báo thời tiết cho bạn...  (sau một lát)  Dự báo cho hôm nay là [thời tiết cụ thể, ví dụ: có mưa, nhiều mây, nắng]. \"\n\n\n**Nếu bot KHÔNG có khả năng truy cập thông tin thời tiết:**\n\n* \"Mình xin lỗi, mình không có thông tin về thời tiết hôm nay.\"\n* \"Mình không thể trả lời câu hỏi đó. Bạn có thể thử tìm kiếm trên Google hoặc một ứng dụng thời tiết khác nhé!\"\n* \"Để biết hôm nay có mưa hay không, bạn nên kiểm tra dự báo thời tiết trên điện thoại hoặc các trang web dự báo thời tiết nhé!\"\n\n\n**Lưu ý:**  Việc lựa chọn câu trả lời phụ thuộc vào chức năng và khả năng của bot.  Càng cung cấp thông tin chính xác và hữu ích càng tốt.\n",
+        "avt": "./assets/bot_avt.jpg"
     }
 ]
