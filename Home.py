@@ -4,7 +4,21 @@ import pandas as pd
 
 from dotenv import load_dotenv 
 import google.generativeai as genai 
-import streamlit as st 
+import streamlit as st
+
+# -- UI ---
+st.set_page_config(
+    page_title="Personal Astrologer Chatbot",
+    page_icon=":crystal_ball:",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+with st.sidebar:
+    st.subheader("Navigation")
+    # Add links to other pages
+    st.page_link("Home.py", label="Chat Bot", icon="🤖")
+    st.page_link("pages/Match.py", label="Matching", icon="💞")
+
 
 # Cleaning dataframe
 @st.cache_data
@@ -66,10 +80,8 @@ genai.GenerativeModel("gemini-1.5-flash",
                                 Answer in one paragraph only, do not write too long.
                                 Only one answer per question, do not write multiple answers.
                                 Only answer questions related to astrology, zodiac signs, and horoscopes.
-                                If the question is not related to astrology, zodiac signs, or horoscopes, you will say "Tôi xin lỗi, tôi không thể trả lời câu hỏi này vì nó không liên quan đến chiêm tinh học, cung hoàng đạo hoặc tử vi.".
                                 If the question is about today zodiac sign horoscope, you will use the get_zodiac_daily("the sign that user mentioned") function to get the horoscope for the zodiac sign.
-                                Stricts:
-                                - If questions are not related to astrology, zodiac signs, or horoscopes, you will say "Tôi xin lỗi, tôi không thể trả lời câu hỏi này vì nó không liên quan đến chiêm tinh học, cung hoàng đạo hoặc tử vi."
+                                If questions are not related to astrology, zodiac signs, or horoscopes, you will say "Tôi xin lỗi, tôi không thể trả lời câu hỏi này vì nó không liên quan đến chiêm tinh học, cung hoàng đạo hoặc tử vi."
                                     """)
 
 #chatbot chatting function
@@ -130,3 +142,4 @@ def astrology_chatbot():
 
 if __name__ == "__main__" :
     astrology_chatbot()
+
