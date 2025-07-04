@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 import google.generativeai as genai 
 import streamlit as st
 
+import datetime
+now = datetime.datetime.now()
+
 # -- UI ---
 st.set_page_config(
     page_title="Personal Astrologer Chatbot",
@@ -13,11 +16,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-with st.sidebar:
-    st.subheader("Navigation")
-    # Add links to other pages
-    st.page_link("Home.py", label="Chat Bot", icon="🤖")
-    st.page_link("pages/Match.py", label="Matching", icon="💞")
 
 
 # Cleaning dataframe
@@ -54,6 +52,9 @@ with open('config.json','r', encoding = 'utf-8') as f :
 
     user_avt = config.get('user_avt')
 
+#Call LLM 
+model = genai.GenerativeModel("gemini-1.5-flash")
+
 #load dataframe zodiac
 zodiac_df = df
 
@@ -66,8 +67,6 @@ def get_zodiac_daily(sign):
     else:
         return {"error": response.status_code, "message": response.text}
 
-#Call LLM 
-model = genai.GenerativeModel("gemini-1.5-flash")
 genai.GenerativeModel("gemini-1.5-flash",
                             system_instruction=f"""
                                 You are {bot_name}, a personal astrologer. You are an expert in astrology and horoscopes and you will help customers to 
@@ -110,7 +109,8 @@ def astrology_chatbot():
         st.session_state.chat_history.append(
             {"role": "user", 
             "content" : prompt,
-            "avt" : user_avt}
+            "avt" : user_avt,
+            "datetime": now.strftime("%Y-%m-%d %H:%M:%S") }
         )
         with st.chat_message("user", avatar = user_avt):
             st.markdown("You")
@@ -123,7 +123,8 @@ def astrology_chatbot():
         st.session_state.chat_history.append(
                 {"role": "assistant", 
                 "content" : bot_response,
-                "avt" : bot_avt}
+                "avt" : bot_avt,
+                "datetime": now.strftime("%Y-%m-%d %H:%M:%S")}
         )
     
         with st.chat_message("assistant", avatar = bot_avt):

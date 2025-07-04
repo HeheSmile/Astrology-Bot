@@ -43,12 +43,6 @@ def find_match(sign):
 st.title("💘 Zodiac Matchmaker")
 st.markdown("Find your cosmic compatibility based on your sign, birthday, and the stars!")
 
-with st.sidebar:
-    st.subheader("Navigation")
-    # Add links to other pages
-    st.page_link("Home.py", label="Chat Bot", icon="🤖")
-    st.page_link("pages/Match.py", label="Matching", icon="💞")
-
 with st.form("zodiac_form"):
     gender = st.selectbox("Your Gender", ["Male", "Female", "Other"])
     birthdate = st.date_input("Your Birthdate")
