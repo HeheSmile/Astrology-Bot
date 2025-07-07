@@ -1,13 +1,12 @@
 import streamlit as st
 import pandas as pd
+
 from sklearn.cluster import KMeans
 from datetime import datetime
 
 st.set_page_config(
     page_title="Personal Astrologer Chatbot",
-    page_icon=":crystal_ball:",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_icon=":crystal_ball:"
 )
 
 compatibility = st.secrets['compatibility_data']
@@ -44,9 +43,9 @@ st.title("💘 Zodiac Matchmaker")
 st.markdown("Find your cosmic compatibility based on your sign, birthday, and the stars!")
 
 with st.form("zodiac_form"):
-    gender = st.selectbox("Your Gender", ["Male", "Female", "Other"])
-    birthdate = st.date_input("Your Birthdate")
-    sign_input = st.selectbox("Your Zodiac Sign", ["Auto Detect from Birthday"] + [z.capitalize() for z in zodiac_list])
+    gender = st.selectbox("Your Gender:red[(Mandatory)]", ["Male", "Female", "Other"])
+    birthdate = st.date_input("Your Birthdate:red[(Mandatory)]", datetime.now(), min_value=datetime(1900, 1, 1), max_value=datetime.now())
+    sign_input = st.selectbox("Your Zodiac Sign:red[(Mandatory)]", ["Leo"] + [z.capitalize() for z in zodiac_list])
     submitted = st.form_submit_button("Find My Match 💞")
 
 if submitted:

@@ -2,6 +2,7 @@
     {
         "role": "assistant",
         "content": "Xin chào tôi là trợ lý chiêm tinh. Bạn cần trợ giúp gì?",
-        "avt": "./assets/bot_avt.jpg"
+        "avt": "./assets/bot_avt.jpg",
+        "datetime": "2025-07-06 12:32:28"
     }
 ]

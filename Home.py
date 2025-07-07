@@ -12,11 +12,17 @@ now = datetime.datetime.now()
 # -- UI ---
 st.set_page_config(
     page_title="Personal Astrologer Chatbot",
-    page_icon=":crystal_ball:",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_icon=":crystal_ball:"
 )
 
+zodiac_signs = [
+    "aries", "taurus", "gemini", "cancer", "leo", "virgo",
+    "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"
+]
+
+def extract_zodiac_keywords(text):
+    words = text.lower().split()
+    return [sign for sign in zodiac_signs if sign in words]
 
 # Cleaning dataframe
 @st.cache_data
@@ -52,9 +58,6 @@ with open('config.json','r', encoding = 'utf-8') as f :
 
     user_avt = config.get('user_avt')
 
-#Call LLM 
-model = genai.GenerativeModel("gemini-1.5-flash")
-
 #load dataframe zodiac
 zodiac_df = df
 
@@ -63,25 +66,26 @@ def get_zodiac_daily(sign):
     api_url = f'https://api.api-ninjas.com/v1/horoscope?zodiac={sign}'
     response = requests.get(api_url, headers={'X-Api-Key': st.secrets['api']['horoscope-api-key']})
     if response.status_code == requests.codes.ok:
-        return response.json()
+        return response.json().get('horoscope')
     else:
         return {"error": response.status_code, "message": response.text}
+    
+def zodiac_data(data):
+    zodiac_signs = extract_zodiac_keywords(data)
+    
 
-genai.GenerativeModel("gemini-1.5-flash",
+model = genai.GenerativeModel("gemini-1.5-flash",
                             system_instruction=f"""
                                 You are {bot_name}, a personal astrologer. You are an expert in astrology and horoscopes and you will help customers to 
                                 answer their questions about zodiac signs, horoscopes, and astrology-related topics.
                                 Act like a human astrologer, you will answer the questions in a friendly and helpful manner.
-                                you will use the following data to answer the questions:{zodiac_df.to_json(orient='records')}.
-                                if you don't know the answer, you will say "Tôi xin lỗi, tôi không biết câu trả lời cho câu hỏi này." 
                                 Despite the questions being in English, you will always response in Vietnamese.
                                 Provide the answer in a concise and clear manner, using simple language that is easy to understand.
                                 Answer in one paragraph only, do not write too long.
                                 Only one answer per question, do not write multiple answers.
-                                Only answer questions related to astrology, zodiac signs, and horoscopes.
-                                If the question is about today zodiac sign horoscope, you will use the get_zodiac_daily("the sign that user mentioned") function to get the horoscope for the zodiac sign.
+                                Diversify your answers, do not repeat the same answer.
                                 If questions are not related to astrology, zodiac signs, or horoscopes, you will say "Tôi xin lỗi, tôi không thể trả lời câu hỏi này vì nó không liên quan đến chiêm tinh học, cung hoàng đạo hoặc tử vi."
-                                    """)
+                                """)
 
 #chatbot chatting function
 def astrology_chatbot():
@@ -93,7 +97,8 @@ def astrology_chatbot():
         st.session_state.chat_history = [
             {"role": "assistant", 
             "content": initial_bot_message,
-            "avt": bot_avt}
+            "avt": bot_avt,
+            "datetime": now.strftime("%Y-%m-%d %H:%M:%S")}
         ]
 
     if 'bot_memory' not in st.session_state:
@@ -105,6 +110,8 @@ def astrology_chatbot():
             st.write(message["content"])
 
     prompt = st.chat_input("Bạn cần hỏi gì về chiêm tinh? ")
+
+    
     if prompt :
         st.session_state.chat_history.append(
             {"role": "user", 
