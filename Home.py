@@ -15,31 +15,20 @@ st.set_page_config(
     page_icon=":crystal_ball:"
 )
 
-zodiac_signs = [
-    "aries", "taurus", "gemini", "cancer", "leo", "virgo",
-    "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"
-]
-
-def extract_zodiac_keywords(text):
-    words = text.lower().split()
-    return [sign for sign in zodiac_signs if sign in words]
-
 # Cleaning dataframe
-@st.cache_data
-def clean_dataframe(df):
-    # Convert 'date' column to datetime and extract day of week, month, and year
-    df['date'] = pd.to_datetime(df['date'], format='%Y%m%d')
+# @st.cache_data
+df = pd.read_csv('./data/horoscope_saved.csv')
+# Convert 'date' column to datetime and extract day of week, month, and year
+df['date'] = pd.to_datetime(df['date'], format='%Y%m%d')
 
-    # Extracting day of week, month, and year from the date
-    df['day_of_week'] = df['date'].dt.dayofweek
-    df['month'] = df['date'].dt.month
-    df['year'] = df['date'].dt.year
+df.isna().sum()  # Check for missing values
+df.nunique()  # Check for unique values in each column
 
-    # Delete the original 'date' column
-    df.drop(columns=['date'], inplace=True)
-    
-    return df
-df = pd.read_csv('./data/horoscope_saved.csv', index_col=0)
+# Extracting day of week, month, and year from the date
+df['day_of_week'] = df['date'].dt.dayofweek
+df['month'] = df['date'].dt.month
+df['year'] = df['date'].dt.year
+df.to_json(orient='records')
 
 #setup api 
 load_dotenv() 
@@ -70,9 +59,31 @@ def get_zodiac_daily(sign):
     else:
         return {"error": response.status_code, "message": response.text}
     
-def zodiac_data(data):
-    zodiac_signs = extract_zodiac_keywords(data)
     
+def get_zodiac_related_ideas(user_query, df, top_n=10):
+    zodiac_signs = [
+        "aries", "taurus", "gemini", "cancer", "leo", "virgo",
+        "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"
+    ]
+    
+    # Match signs from the query
+    found_signs = [sign for sign in zodiac_signs if sign in user_query.lower()]
+    
+    # Filter by sign if any found
+    filtered_df = df[df["sign"].isin(found_signs)] if found_signs else df
+
+    # Rank by how many words from the query appear in the horoscope
+    user_words = set(user_query.lower().split())
+    filtered_df["score"] = filtered_df["horoscope"].apply(
+        lambda h: sum(word in h.lower() for word in user_words)
+    )
+
+    # Get top N results
+    top_results = filtered_df.sort_values(by="score", ascending=False).head(top_n)
+    return top_results[["sign", "date", "horoscope"]].reset_index(drop=True)
+# Test the fallback function
+
+
 
 model = genai.GenerativeModel("gemini-1.5-flash",
                             system_instruction=f"""
