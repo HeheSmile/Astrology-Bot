@@ -1,9 +1,9 @@
 {
     "initial_bot_message": "Xin chào tôi là trợ lý chiêm tinh. Bạn cần trợ giúp gì?",
 
-    "bot_name": "ZodiacBot",
+    "bot_name": "AstroBot",
 
-    "bot_avt":"./assets/bot_avt.jpg",
+    "bot_avt":"./assets/bot_avt.png",
     "bot_initial_message":"Hi, I am AstroBot, your personal astrologer. I can help you with your horoscope and astrology-related questions. Please ask me anything!",
     
     "user_avt":"./assets/user_avt.jpg"
