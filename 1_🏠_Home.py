@@ -82,10 +82,7 @@ def load_model():
                                     Diversify your answers, do not repeat the same answer.
 
                                     If questions are not related to astrology, zodiac signs, or horoscopes, you will say "Tôi xin lỗi, tôi không thể trả lời câu hỏi này vì nó không liên quan đến chiêm tinh học, cung hoàng đạo hoặc tử vi."
-                                    If the user asks for a daily horoscope, you will call the get_zodiac_daily() function to get the daily horoscope for the zodiac sign.
-                                    If the user asks for zodiac-related ideas, you will call the get_zodiac_related_ideas() function to get the top 10 zodiac-related ideas based on the user's query.
-                                    Get data {', '.join(zodiac_df)} from the dataframe zodiac_df.
-                                    
+
                                     Stricts:
                                     - Diversify your answers, do not repeat the same answer.
                                     """)
