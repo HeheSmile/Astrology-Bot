@@ -37,6 +37,20 @@ def find_match(sign):
     match = possible.mean(axis=1).idxmax()
     return match
 
+def get_zodiac_sign(month: int, day: int) -> str:
+    if   (month == 1  and day >= 20) or (month == 2  and day <= 18): return "aquarius"
+    elif (month == 2  and day >= 19) or (month == 3  and day <= 20): return "pisces"
+    elif (month == 3  and day >= 21) or (month == 4  and day <= 19): return "aries"
+    elif (month == 4  and day >= 20) or (month == 5  and day <= 20): return "taurus"
+    elif (month == 5  and day >= 21) or (month == 6  and day <= 20): return "gemini"
+    elif (month == 6  and day >= 21) or (month == 7  and day <= 22): return "cancer"
+    elif (month == 7  and day >= 23) or (month == 8  and day <= 22): return "leo"
+    elif (month == 8  and day >= 23) or (month == 9  and day <= 22): return "virgo"
+    elif (month == 9  and day >= 23) or (month == 10 and day <= 22): return "libra"
+    elif (month == 10 and day >= 23) or (month == 11 and day <= 21): return "scorpio"
+    elif (month == 11 and day >= 22) or (month == 12 and day <= 21): return "sagittarius"
+    else: return "capricorn"
+
 
 #----UI----
 st.title("💘 Zodiac Matchmaker")
@@ -45,17 +59,18 @@ st.markdown("Find your cosmic compatibility based on your sign, birthday, and th
 with st.form("zodiac_form"):
     gender = st.selectbox("Your Gender:red[(Mandatory)]", ["Male", "Female", "Other"])
     birthdate = st.date_input("Your Birthdate:red[(Mandatory)]", datetime.now(), min_value=datetime(1900, 1, 1), max_value=datetime.now())
-    sign_input = st.selectbox("Your Zodiac Sign:red[(Mandatory)]", ["Leo"] + [z.capitalize() for z in zodiac_list])
+    sign_input = st.selectbox("Your Zodiac Sign:red[(Mandatory)]", ["Auto Detect from Birthday"] + [z.capitalize() for z in zodiac_list])
     submitted = st.form_submit_button("Find My Match 💞")
+    birthdate_formatted = str(birthdate)
 
 if submitted:
-    bdate_str = birthdate.strftime("%Y-%m-%d")
+    bdate_str = datetime.strptime(birthdate_formatted, '%Y-%m-%d')
+    bdate_str.strftime('%m/%d/%Y') 
 
     if sign_input == "Auto Detect from Birthday":
-        user_sign = find_match(bdate_str)
+        user_sign = get_zodiac_sign(bdate_str.month, bdate_str.day)
         print(user_sign)
         st.write(f"🪐 Detected Zodiac Sign: **{user_sign.capitalize()}**")
-        
     else:
         user_sign = sign_input.lower()
 

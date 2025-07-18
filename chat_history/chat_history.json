@@ -3,18 +3,6 @@
         "role": "assistant",
         "content": "Xin chào tôi là trợ lý chiêm tinh. Bạn cần trợ giúp gì?",
         "avt": "./assets/bot_avt.png",
-        "datetime": "2025-07-13 09:58:24"
-    },
-    {
-        "role": "user",
-        "content": "what will happen to scorpion today in the end of the day?",
-        "avt": "./assets/user_avt.jpg",
-        "datetime": "2025-07-13 09:58:48"
-    },
-    {
-        "role": "assistant",
-        "content": "Chào bạn! Hôm nay, chòm sao Bọ Cạp sẽ có một kết thúc ngày khá yên tĩnh đấy.  Sau một ngày có thể khá bận rộn, bạn sẽ tìm thấy sự bình an và thư giãn vào cuối ngày. Hãy dành thời gian cho bản thân, nghỉ ngơi và tận hưởng những khoảnh khắc yên tĩnh để chuẩn bị cho ngày mai nhé!\n",
-        "avt": "./assets/bot_avt.png",
-        "datetime": "2025-07-13 09:58:48"
+        "datetime": "2025-07-18 12:33:21"
     }
 ]
