@@ -70,7 +70,7 @@ if submitted:
     if sign_input == "Auto Detect from Birthday":
         user_sign = get_zodiac_sign(bdate_str.month, bdate_str.day)
         print(user_sign)
-        st.write(f"🪐 Detected Zodiac Sign: **{user_sign.capitalize()}**")
+        sign_input = user_sign.capitalize()
     else:
         user_sign = sign_input.lower()
 
