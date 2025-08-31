@@ -15,6 +15,39 @@ st.set_page_config(
     page_icon=":crystal_ball:"
 )
 
+st.markdown(
+    """ 
+    <style>
+    .stApp {
+        background-image: url("https://images.wallpaperscraft.com/image/single/constellation_cassiopeia_constellation_stars_887223_1920x1080.jpg");
+        background-size: fit;
+        object-fit: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        }
+    [data-testid="stHeader"] {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    [data-testid="stChatMessage"] {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .st-emotion-cache-hzygls{
+        background-color: rgba(0,0,0,0);
+    }
+
+    [data-testid="stBottomBlockContainer"] {
+        background-color: rgb(0, 0, 0, 0);
+        padding : 0px
+        display: flex;
+        flex-direction: column;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
 # Cleaning dataframe
@@ -99,7 +132,7 @@ def astrology_chatbot():
             {"role": "assistant", 
             "content": initial_bot_message,
             "avt": bot_avt,
-            "datetime": now.strftime("%Y-%m-%d %H:%M:%S")}
+            "time": now.strftime("%H:%M:%S")}
         ]
 
     if 'bot_memory' not in st.session_state:
@@ -118,7 +151,7 @@ def astrology_chatbot():
             {"role": "user", 
             "content" : prompt,
             "avt" : user_avt,
-            "datetime": now.strftime("%Y-%m-%d %H:%M:%S") }
+            "time": now.strftime("%H:%M:%S") }
         )
         with st.chat_message("user", avatar = user_avt):
             st.markdown("You")
@@ -132,7 +165,7 @@ def astrology_chatbot():
                 {"role": "assistant", 
                 "content" : bot_response,
                 "avt" : bot_avt,
-                "datetime": now.strftime("%Y-%m-%d %H:%M:%S")}
+                "time": now.strftime("%H:%M:%S")}
         )
     
         with st.chat_message("assistant", avatar = bot_avt):
@@ -146,7 +179,7 @@ def astrology_chatbot():
         print(st.session_state.chat_history)
 
         # Save chat history to a file
-        with open('./chat_history/chat_history.json', 'w', encoding='utf-8') as f:
+        with open(f'./chat_history/{now.strftime("%Y_%m_%d")}.json', 'w', encoding='utf-8') as f:
             json.dump(st.session_state.chat_history, f, ensure_ascii=False, indent=4)
 
 if __name__ == "__main__" :

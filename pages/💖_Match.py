@@ -9,6 +9,32 @@ st.set_page_config(
     page_icon=":crystal_ball:"
 )
 
+st.markdown(
+    """ 
+    <style>
+    .stApp {
+        background-image: url("https://images.wallpaperscraft.com/image/single/constellation_cassiopeia_constellation_stars_887223_1920x1080.jpg");
+        background-size: fit;
+        object-fit: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        }
+    [data-testid="stHeader"] {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    [data-testid="stChatMessage"] {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    [data-testid="stEmotionCache"] {
+        background-color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 compatibility = st.secrets['compatibility_data']
 compatibility_data = {sign: list(map(int, compatibility[sign])) for sign in compatibility}
 zodiac_list = list(compatibility_data.keys())
@@ -70,7 +96,6 @@ if submitted:
     if sign_input == "Auto Detect from Birthday":
         user_sign = get_zodiac_sign(bdate_str.month, bdate_str.day)
         print(user_sign)
-        sign_input = user_sign.capitalize()
     else:
         user_sign = sign_input.lower()
 

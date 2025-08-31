@@ -1,6 +1,6 @@
 # Ignore Streamlit secrets
 .streamlit/secrets.toml
-
+.streamlit/config.toml
 # Ignore Python cache files
 __pycache__/
 *.py[cod]
